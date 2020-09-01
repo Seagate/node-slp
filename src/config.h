@@ -158,8 +158,12 @@
 /* whether sockaddr_storage has ss_family */
 #define HAVE_SOCKADDR_STORAGE_SS_FAMILY 1
 
-/* whether sockaddr_storage has ss_len */
-#define HAVE_SOCKADDR_STORAGE_SS_LEN 1
+#if __linux__
+
+#else
+    /* whether sockaddr_storage has ss_len */
+    #define HAVE_SOCKADDR_STORAGE_SS_LEN 1
+#endif
 
 /* Define to 1 if you have the `socket' function. */
 #define HAVE_SOCKET 1

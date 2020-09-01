@@ -72,6 +72,12 @@
 				'-lws2_32'
  	          ]
        }],
+        ['OS=="linux"', {
+		  'defines': [
+				'ETCDIR="/etc"',
+				'LINUX'
+		  ],
+        }],
         ['OS=="mac"', {
 		  'defines': [
 				'ETCDIR="/etc"',
