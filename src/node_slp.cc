@@ -140,6 +140,11 @@ void Init(v8::Local<v8::Object> exports) {
                Nan::New<v8::FunctionTemplate>(FindSrvs)
                    ->GetFunction(context)
                    .ToLocalChecked());
+  exports->Set(context,
+               Nan::New("findAttrs").ToLocalChecked(),
+               Nan::New<v8::FunctionTemplate>(FindAttrs)
+                   ->GetFunction(context)
+                   .ToLocalChecked());
 }
 
 NODE_MODULE(slp, Init)

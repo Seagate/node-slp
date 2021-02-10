@@ -5,6 +5,6 @@
 
 using namespace v8;
 
-Local<Value> FindAttrs(const Arguments& args);
+NAN_METHOD(FindAttrs);
 
 #endif /* __FINDATTRS_H__ */
