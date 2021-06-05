@@ -8,16 +8,20 @@ struct FindAttrsBaton : Baton {
   // arguments
   Nan::Utf8String urlOrServiceType;
   Nan::Utf8String scopeList;
+  Nan::Utf8String interfaceList;
   Nan::Utf8String attrIds;
   // result
   std::vector< std::string > result;
 
-  FindAttrsBaton(const Nan::FunctionCallbackInfo<v8::Value>& info) : Baton(), urlOrServiceType(info[0]), scopeList(info[1]), attrIds(info[2]) {
-    callback = new Nan::Callback(Nan::To<Function>(info[3]).ToLocalChecked());
+  FindAttrsBaton(const Nan::FunctionCallbackInfo<v8::Value>& info) : Baton(), urlOrServiceType(info[0]), interfaceList(info[1]), scopeList(info[2]), attrIds(info[3]) {
+    callback = new Nan::Callback(Nan::To<Function>(info[4]).ToLocalChecked());
   }
 
   static void work(uv_work_t* work_req) {
     FindAttrsBaton* baton = static_cast<FindAttrsBaton*>(work_req->data);
+    baton->slp_error = SLPAssociateIFList(baton->slp_handle, *baton->interfaceList);
+    if (baton->slp_error != SLP_OK)
+    	return;
     baton->slp_error = SLPFindAttrs(baton->slp_handle, *baton->urlOrServiceType, *baton->scopeList, *baton->attrIds,
       &FindAttrsBaton::callbackSLP, baton);
   }
