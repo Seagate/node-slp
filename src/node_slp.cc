@@ -1,12 +1,12 @@
 #include <stdlib.h> // atexit
 #include "node_slp.h"
 #include "api/baton.h"
-#include "api/dereg.h"
-#include "api/delattrs.h"
+//#include "api/dereg.h"
+//#include "api/delattrs.h"
 #include "api/findattrs.h"
 #include "api/findsrvs.h"
-#include "api/findsrvtypes.h"
-#include "api/reg.h"
+//#include "api/findsrvtypes.h"
+//#include "api/reg.h"
 
 void Version(const Nan::FunctionCallbackInfo<v8::Value>& info) {
   info.GetReturnValue().Set(Nan::New("1.2.1").ToLocalChecked());
