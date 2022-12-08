@@ -125,7 +125,7 @@ struct FindAttrsBaton : Baton {
         break;
 
       // Add attr-value pair to object
-      obj->Set(obj->CreationContext(), Nan::New<String>(attr.c_str()).ToLocalChecked(), Nan::New<String>(value.c_str()).ToLocalChecked());
+      Nan::Set(obj, Nan::New<String>(attr.c_str()).ToLocalChecked(), Nan::New<String>(value.c_str()).ToLocalChecked());
 
       cursor += advance;
     } while (advance > 0);
@@ -150,7 +150,7 @@ struct FindAttrsBaton : Baton {
       for (auto it=unique_responses.begin(); it!=unique_responses.end(); ++it) {
         Local<Object> obj = Nan::New<Object>();
         parse_attr_list(*it, obj);
-        ary->Set(obj->CreationContext(), i++, obj);
+        Nan::Set(ary, i++, obj);
       }
 
       Local<Value> argv[2] = { Nan::Null(), ary };

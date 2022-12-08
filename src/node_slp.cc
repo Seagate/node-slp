@@ -8,6 +8,13 @@
 //#include "api/findsrvtypes.h"
 //#include "api/reg.h"
 
+using v8::FunctionTemplate;
+using v8::Object;
+using v8::String;
+using Nan::GetFunction;
+using Nan::New;
+using Nan::Set;
+
 void Version(const Nan::FunctionCallbackInfo<v8::Value>& info) {
   info.GetReturnValue().Set(Nan::New("1.2.1").ToLocalChecked());
 }
@@ -118,33 +125,21 @@ extern "C" void init(Handle<Object> target) {
 }
 */
 
-void Init(v8::Local<v8::Object> exports) {
-  v8::Local<v8::Context> context = exports->CreationContext();
-  exports->Set(context,
-               Nan::New("version").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(Version)
-                   ->GetFunction(context)
-                   .ToLocalChecked());
-  exports->Set(context,
-               Nan::New("refreshInterval").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(GetRefreshInterval)
-                   ->GetFunction(context)
-                   .ToLocalChecked());
-  exports->Set(context,
-               Nan::New("MAX_LIFETIME").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(GetMaxLifetime)
-                   ->GetFunction(context)
-                   .ToLocalChecked());
-  exports->Set(context,
-               Nan::New("findSrvs").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(FindSrvs)
-                   ->GetFunction(context)
-                   .ToLocalChecked());
-  exports->Set(context,
-               Nan::New("findAttrs").ToLocalChecked(),
-               Nan::New<v8::FunctionTemplate>(FindAttrs)
-                   ->GetFunction(context)
-                   .ToLocalChecked());
+NAN_MODULE_INIT(Init) {
+  Nan::Set(target, New("version").ToLocalChecked(),
+    GetFunction(New<FunctionTemplate>(Version)).ToLocalChecked());
+
+  Nan::Set(target, New("refreshInterval").ToLocalChecked(),
+    GetFunction(New<FunctionTemplate>(GetRefreshInterval)).ToLocalChecked());
+
+  Nan::Set(target, New("MAX_LIFETIME").ToLocalChecked(),
+    GetFunction(New<FunctionTemplate>(GetMaxLifetime)).ToLocalChecked());
+
+  Nan::Set(target, New("findSrvs").ToLocalChecked(),
+    GetFunction(New<FunctionTemplate>(FindSrvs)).ToLocalChecked());
+
+  Nan::Set(target, New("findAttrs").ToLocalChecked(),
+    GetFunction(New<FunctionTemplate>(FindAttrs)).ToLocalChecked());
 }
 
 NODE_MODULE(slp, Init)

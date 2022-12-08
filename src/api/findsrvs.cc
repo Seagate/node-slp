@@ -45,9 +45,9 @@ struct FindSrvsBaton : Baton {
       Local<Array> arr = Nan::New<Array>(); // [ { url: "", lifetime: 0 }, ... ]
       for (unsigned int i = 0; i < baton->result.size(); i++) {
         Local<Object> obj = Nan::New<Object>();
-        obj->Set(obj->CreationContext(), Nan::New<String>("url").ToLocalChecked(), Nan::New<String>(baton->result[i].first.c_str()).ToLocalChecked());
-        obj->Set(obj->CreationContext(), Nan::New<String>("lifetime").ToLocalChecked(), Nan::New<Integer>(baton->result[i].second));
-        arr->Set(obj->CreationContext(), i, obj);
+        Nan::Set(obj, Nan::New<String>("url").ToLocalChecked(), Nan::New<String>(baton->result[i].first.c_str()).ToLocalChecked());
+        Nan::Set(obj, Nan::New<String>("lifetime").ToLocalChecked(), Nan::New<Integer>(baton->result[i].second));
+        Nan::Set(arr, i, obj);
       }
       Local<Value> argv[2] = { Nan::Null(), arr };
       baton->callback->Call(2, argv);
