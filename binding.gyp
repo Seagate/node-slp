@@ -83,6 +83,7 @@
         }],
         ['OS=="mac"', {
 		  'defines': [
+				'USE_STD_ATOMICS',
 				'ETCDIR="/etc"',
 				'DARWIN'
 		  ],
